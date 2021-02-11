@@ -1,0 +1,178 @@
+
+<div class="jumbotron" *ngIf="showbutton">
+  <div class="container">
+    <button class="open-button" mat-fab  (click)="chat_Toggle()">
+      <mat-icon matBadge="15"  mat-raised-button color="primary">chat_bubble_outline</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="jumbotron" *ngIf="show" >
+   <div class="col-md-5 col-lg-6" style="float: right;">
+    <mat-card>
+      <!-- cancel chat -->
+      <div class="button-row" (click)="cancel()" style="float:right; cursor:pointer">
+        <mat-icon >clear</mat-icon>
+      </div>
+      <!-- end -->
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <svg id="whatsapp_1_" data-name="whatsapp (1)" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+              <path id="Path_14011" data-name="Path 14011" d="M0,22l1.517-5.5A10.941,10.941,0,0,1,10.962,0,11.05,11.05,0,0,1,22,10.924,11.18,11.18,0,0,1,10.962,22a11.042,11.042,0,0,1-5.348-1.517Z" fill="#ededed"/>
+              <path id="Path_14012" data-name="Path 14012" d="M48.159,60.752l.341.19a9.006,9.006,0,0,0,4.741,1.4,9.2,9.2,0,0,0,9.1-9.179,9.1,9.1,0,0,0-18.207,0,9.189,9.189,0,0,0,1.4,4.893l.228.341L44.9,61.586Z" transform="translate(-42.241 -42.241)" fill="#55cd6c"/>
+              <path id="Path_14013" data-name="Path 14013" d="M132.178,135.1l-.721-.038a.861.861,0,0,0-.607.228,3.143,3.143,0,0,0-1.062,1.631,4.933,4.933,0,0,0,1.138,3.869,11.5,11.5,0,0,0,6.221,4.514,3.081,3.081,0,0,0,2.579-.3,2.238,2.238,0,0,0,.986-1.441l.114-.531a.381.381,0,0,0-.19-.417l-2.39-1.1a.362.362,0,0,0-.455.114l-.948,1.214a.3.3,0,0,1-.3.076,7.371,7.371,0,0,1-3.983-3.414.286.286,0,0,1,.038-.3l.91-1.024a.467.467,0,0,0,.076-.379l-1.1-2.465a.331.331,0,0,0-.3-.228" transform="translate(-124.136 -129.259)" fill="#fefefe"/>
+            </svg>
+            <span style="padding: 10px;" >WhatsApp</span>
+          </ng-template>
+          <div class="messaging">
+            <mat-card>
+              <mat-tab-group>
+                <mat-tab *ngFor="let item of dataObj" > 
+                  <ng-template mat-tab-label>
+                    <img src="{{item.src}}" width="auto; hight:20px  border-radius: 50%;">
+                    <span style="padding: 3px;"  matBadgeColor="accent"  matBadge="{{item.message}}">{{item.name | json}} </span>
+                  </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+            </mat-card>
+            <div class="inbox_msg">
+              <div class="mesgs">
+                <div class="msg_history">
+                  <div *ngFor="let msg of messages">
+                  <div class="incoming_msg" *ngIf="msg.type == 'received'">
+                    <div class="incoming_msg_img"> </div>
+                    <div class="received_msg">
+                      <div class="received_withd_msg">
+                        <p>
+                        {{msg.message}} 
+                        </p>
+                        <span class="time_date"> {{msg.date | date:'medium'}} </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="outgoing_msg" *ngIf="msg.type == 'sent'">
+                    <div class="sent_msg">
+                      <p>
+                          {{msg.message}} 
+                      </p>
+                      <span class="time_date"> {{msg.date | date:'medium'}}</span>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="type_msg">
+                  <div class="input_msg_write">
+                    <input type="text" class="write_msg" [value]="txtMessage"
+                    (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="Write your message" />
+                    <button class="msg_send_btn" type="button"  (click)="sendMessage()">
+                      <svg id="send-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path id="Path_14023" data-name="Path 14023" d="M0,0H24V24H0Z" fill="none"/>
+                        <path id="Path_14024" data-name="Path 14024" d="M4,8.25l7.51,1L4.01,6.03Zm.01,9.72,7.5-3.22L4,15.75Z" fill="#fff" opacity="0.3"/>
+                        <path id="Path_14025" data-name="Path 14025" d="M2.01,3,2,10l15,2L2,14l.01,7L23,12ZM4,8.25V6.03l7.51,3.22Zm.01,9.72V15.75l7.51-1Z" fill="#fff"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- Messanger block -->
+        <mat-tab> 
+          <ng-template mat-tab-label>
+            <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="20" height="20.41" viewBox="0 0 20 20.41">
+              <g id="Layer_1" data-name="Layer 1">
+                <path id="Path_14014" data-name="Path 14014" d="M10,0C4.48,0,0,4.21,0,9.41a9.19,9.19,0,0,0,3.62,7.24v3.76l3.55-2A10.57,10.57,0,0,0,10,18.8c5.52,0,10-4.22,10-9.41S15.52,0,10,0Zm1.08,12.66L8.5,10l-5,2.67L9,7l2.58,2.67L16.52,7Z" fill="#0081ff"/>
+              </g>
+            </svg>
+            <span style="padding: 10px;">Messanger</span>
+            <div class="example-button-container">
+              <button  mat-mini-fab color="accent" >1</button>
+            </div>
+          </ng-template>
+          <div class="messaging">
+            <mat-card>
+              <mat-tab-group>
+              <mat-tab *ngFor="let item of dataObj" > 
+                <ng-template mat-tab-label>
+                  <img src="{{item.src}}" width="auto; hight:20px  border-radius: 50%;">
+                  <span style="padding: 10px;">{{item.name | json}} </span>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+            </mat-card>
+            <div class="inbox_msg">
+              <div class="mesgs">
+                <div class="msg_history">
+                  <div *ngFor="let msg of messanger">
+                  <div class="incoming_msg" *ngIf="msg.type == 'received'">
+                    <div class="incoming_msg_img"> </div>
+                    <div class="received_msg">
+                      <div class="received_withd_msg">
+                        <p>
+                        {{msg.message}} 
+                        </p>
+                        <span class="time_date"> {{msg.date | date:'medium'}} </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="outgoing_msg" *ngIf="msg.type == 'sent'">
+                    <div class="sent_msg">
+                      <p>
+                          {{msg.message}} 
+                      </p>
+                      <span class="time_date"> {{msg.date | date:'medium'}}</span>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="type_msg">
+                  <div class="input_msg_write">
+                    <input type="text" class="write_msg" [value]="txtMessanger"
+                    (input)="txtMessanger=$event.target.value" (keydown.enter)="send_Messanger()" placeholder="Write your message" />
+                    <button class="msg_send_btn" type="button"  (click)="send_Messanger()">
+                      <svg id="send-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path id="Path_14023" data-name="Path 14023" d="M0,0H24V24H0Z" fill="none"/>
+                        <path id="Path_14024" data-name="Path 14024" d="M4,8.25l7.51,1L4.01,6.03Zm.01,9.72,7.5-3.22L4,15.75Z" fill="#fff" opacity="0.3"/>
+                        <path id="Path_14025" data-name="Path 14025" d="M2.01,3,2,10l15,2L2,14l.01,7L23,12ZM4,8.25V6.03l7.51,3.22Zm.01,9.72V15.75l7.51-1Z" fill="#fff"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- End -->
+        <!-- Website block -->
+        <mat-tab label="Website">
+           <ng-template mat-tab-label>
+              <svg id="language-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path id="Path_14008" data-name="Path 14008" d="M0,0H24V24H0Z" fill="none"/>
+                <path id="Path_14009" data-name="Path 14009" d="M5.08,8H8.03A15.649,15.649,0,0,1,9.41,4.44,7.987,7.987,0,0,0,5.08,8ZM7.5,12a16.515,16.515,0,0,1,.14-2H4.26a7.822,7.822,0,0,0,0,4H7.64a16.515,16.515,0,0,1-.14-2ZM5.08,16a7.987,7.987,0,0,0,4.33,3.56A15.649,15.649,0,0,1,8.03,16ZM12,4.04A14.087,14.087,0,0,0,10.09,8h3.82A14.087,14.087,0,0,0,12,4.04ZM18.92,8a8.03,8.03,0,0,0-4.33-3.56A15.649,15.649,0,0,1,15.97,8ZM12,19.96A14.087,14.087,0,0,0,13.91,16H10.09A14.087,14.087,0,0,0,12,19.96Zm2.59-.4A8.03,8.03,0,0,0,18.92,16H15.97A15.649,15.649,0,0,1,14.59,19.56ZM19.74,10H16.36a16.515,16.515,0,0,1,.14,2,16.515,16.515,0,0,1-.14,2h3.38a7.822,7.822,0,0,0,0-4ZM9.66,10a14.585,14.585,0,0,0-.16,2,14.713,14.713,0,0,0,.16,2h4.68a14.713,14.713,0,0,0,.16-2,14.585,14.585,0,0,0-.16-2Z" fill="#185edf" opacity="0.3"/>
+                <path id="Path_14010" data-name="Path 14010" d="M11.99,2A10,10,0,1,0,22,12,10,10,0,0,0,11.99,2Zm6.93,6H15.97a15.649,15.649,0,0,0-1.38-3.56A8.03,8.03,0,0,1,18.92,8ZM12,4.04A14.087,14.087,0,0,1,13.91,8H10.09A14.087,14.087,0,0,1,12,4.04ZM4.26,14a7.822,7.822,0,0,1,0-4H7.64a16.515,16.515,0,0,0-.14,2,16.515,16.515,0,0,0,.14,2Zm.82,2H8.03a15.649,15.649,0,0,0,1.38,3.56A7.987,7.987,0,0,1,5.08,16ZM8.03,8H5.08A7.987,7.987,0,0,1,9.41,4.44,15.649,15.649,0,0,0,8.03,8ZM12,19.96A14.087,14.087,0,0,1,10.09,16h3.82A14.087,14.087,0,0,1,12,19.96ZM14.34,14H9.66a14.713,14.713,0,0,1-.16-2,14.585,14.585,0,0,1,.16-2h4.68a14.585,14.585,0,0,1,.16,2A14.713,14.713,0,0,1,14.34,14Zm.25,5.56A15.649,15.649,0,0,0,15.97,16h2.95A8.03,8.03,0,0,1,14.59,19.56ZM16.36,14a16.515,16.515,0,0,0,.14-2,16.515,16.515,0,0,0-.14-2h3.38a7.822,7.822,0,0,1,0,4Z" fill="#185edf"/>
+              </svg>
+              <span style="padding: 10px;">Website</span>
+              <button  mat-mini-fab color="accent" class="btn btn-primary btn-sm" >6</button>
+           </ng-template>
+           <div class="messaging">
+            <mat-card>
+              <mat-tab-group>
+                <mat-tab *ngFor="let item of dataObj" > 
+                  <ng-template mat-tab-label>
+                    <img src="{{item.src}}" width="auto; hight:20px  border-radius: 50%;">
+                    <span style="padding: 10px;">{{item.name | json}} </span>
+                  </ng-template>
+                </mat-tab>
+              </mat-tab-group>
+              <p> Well come to Locobuzz</p>
+            </mat-card>
+           </div>
+        </mat-tab>
+         <!-- End -->
+      </mat-tab-group>
+    </mat-card>
+   </div>
+</div>
+
